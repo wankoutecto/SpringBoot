@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.example.quizapp.model.Question;
 import com.example.quizapp.model.Quiz;
 import com.example.quizapp.model.QuizWrapper;
+import com.example.quizapp.model.Response;
 import com.example.quizapp.repository.QuestionRepository;
 import com.example.quizapp.repository.QuizRepository;
 
@@ -52,5 +53,25 @@ public class QuizService {
 			e.printStackTrace();
 		}
 		return new ResponseEntity<>(new ArrayList(), HttpStatus.BAD_REQUEST);
+	}
+
+	public ResponseEntity<Integer> getResponseQuiz(int id, List<Response> responses) {
+		Optional<Quiz> quiz = quizRepo.findById(id);
+		if (quiz.isEmpty()) {
+	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	    }
+		List<Question> questions = quiz.get().getQuestions();
+		int i = 0;
+		int right = 0;
+		for(Response response: responses) {
+			if (response != null && response.getResponse() != null) {
+	            if (response.getResponse().equals(questions.get(i).getRightAnswer())) {
+	                right++;
+	            }
+	        }
+			i++;
+		}	
+		
+		return new ResponseEntity<>(right, HttpStatus.OK);
 	}
 }
