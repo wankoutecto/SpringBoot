@@ -29,12 +29,11 @@ public class Product {
 	private BigDecimal price;
 	private int inventory;
 	private String description;
-	@Autowired
+
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "category_id")
 	private Category category;
 
-	@Autowired
 	@OneToMany(mappedBy= "product", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Image> images;
 	

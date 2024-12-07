@@ -19,19 +19,17 @@ import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+
 @Data
 @NoArgsConstructor
 public class ProductDto {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
 	private String brand;
 	private BigDecimal price;
 	private int inventory;
 	private String description;
-	private Category category;
+	private CategoryDto category;
 	private List<ImageDto> images;
 	
 }
